@@ -1,46 +1,31 @@
 package com.web.files.Service;
 
-import com.web.files.Model.UserProfile;
+import com.web.files.Model.UserDataSet;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class DBService {
-    private static final SessionFactory sessionFactory = initSessionFactory();
+    private static final SessionFactory sessionFactory = new Configuration()
+                                                            .configure("hibernate.cfg.xml")
+                                                            .addAnnotatedClass(UserDataSet.class)
+                                                            .buildSessionFactory();
 
-    public static boolean isUserExist(String login, String password) {
-        assert sessionFactory != null;
+    public static UserDataSet read(String login,String password) {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
-
-        UserProfile userProfile = session.createQuery("FROM UserProfile WHERE login = :login AND password = :password", UserProfile.class)
+        UserDataSet userDataSet = session.createQuery("FROM UserDataSet WHERE login = :login AND password = :password", UserDataSet.class)
                 .setParameter("login", login)
-                .setParameter("password", password)
+                .setParameter("password",password)
                 .uniqueResult();
-
         session.getTransaction().commit();
-
-        return userProfile != null;
+        return userDataSet;
     }
 
-    public static void createUser(UserProfile profile) {
-        assert sessionFactory != null;
+    public static void save(UserDataSet profile) {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
-
         session.save(profile);
-
         session.getTransaction().commit();
-    }
-    private static SessionFactory initSessionFactory(){
-        try {
-            return new Configuration()
-                    .configure("hibernate.cfg.xml")
-                    .addAnnotatedClass(UserProfile.class)
-                    .buildSessionFactory();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

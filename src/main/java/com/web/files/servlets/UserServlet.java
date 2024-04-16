@@ -1,6 +1,6 @@
 package com.web.files.servlets;
 
-import com.web.files.Model.UserProfile;
+import com.web.files.Model.UserDataSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,8 +13,8 @@ import java.io.File;
 import java.io.IOException;
 
 import static com.web.files.Service.CookieService.GetCookie;
-import static com.web.files.Service.DBService.createUser;
-import static com.web.files.Service.DBService.isUserExist;
+import static com.web.files.Service.DBService.save;
+import static com.web.files.Service.DBService.read;
 
 @WebServlet(urlPatterns = {"/reg"})
 public class UserServlet extends HttpServlet {
@@ -43,8 +43,8 @@ public class UserServlet extends HttpServlet {
             return;
         }
 
-        UserProfile profile = new UserProfile(login, pass, email);
-        if (!isUserExist(login,pass)) {
+        UserDataSet profile = new UserDataSet(login, pass, email);
+        if (read(login,pass)==null) {
 
             // Создание новой папки для пользователя
             File folder = new File("C:\\JavaTechDB",login);
@@ -56,7 +56,7 @@ public class UserServlet extends HttpServlet {
                 return;
             }
 
-            createUser(profile);
+            save(profile);
 
             String currentURL = request.getRequestURL().toString();
             response.sendRedirect(currentURL.substring(0, currentURL.lastIndexOf("/")) + "/auth");

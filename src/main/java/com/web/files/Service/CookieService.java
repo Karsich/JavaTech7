@@ -1,18 +1,15 @@
 package com.web.files.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.web.files.Model.UserProfile;
+import com.web.files.Model.UserDataSet;
 import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.Cookie;
-import java.util.HashMap;
-import java.util.Map;
 
 public class CookieService {
 
-    public static Cookie MakeCookieAuth(UserProfile userProfiles) {
+    public static Cookie MakeCookieAuth(UserDataSet userProfiles) {
         ObjectMapper objectMapper = new ObjectMapper();
         String dbAsString;
         try {

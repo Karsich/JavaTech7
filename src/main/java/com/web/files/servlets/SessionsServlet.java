@@ -1,8 +1,5 @@
 package com.web.files.servlets;
 
-import com.web.files.Model.UserProfile;
-import com.web.files.Service.CookieService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -13,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.web.files.Service.CookieService.GetCookie;
-import static com.web.files.Service.DBService.isUserExist;
+import static com.web.files.Service.DBService.read;
 
 @WebServlet(urlPatterns = {"/auth"})
 public class SessionsServlet extends HttpServlet {
@@ -40,7 +37,7 @@ public class SessionsServlet extends HttpServlet {
             return;
         }
 
-        if (!isUserExist(login,pass)) {
+        if (read(login,pass)==null) {
             response.setContentType("text/html;charset=utf-8");
             response.getWriter().println("Неправильный логин или пароль");
             return;

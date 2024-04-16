@@ -12,6 +12,6 @@
         <property name="hibernate.connection.password">securepassword</property>
         <property name="hibernate.current_session_context_class">thread</property>
 
-        <mapping class="com.web.files.Model.UserProfile"/>
+        <mapping class="com.web.files.Model.UserDataSet"/>
     </session-factory>
 </hibernate-configuration>

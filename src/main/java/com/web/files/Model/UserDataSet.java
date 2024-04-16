@@ -6,15 +6,15 @@ import javax.persistence.Id;
 
 @Entity
 @Table(name = "users")
-public class UserProfile {
+public class UserDataSet {
     @Id
     private String login;
     private String password;
     private String email;
 
 
-    public UserProfile() {}
-    public UserProfile(String login, String password, String email) {
+    public UserDataSet() {}
+    public UserDataSet(String login, String password, String email) {
         this.login = login;
         this.password = password;
         this.email = email;
